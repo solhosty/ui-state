@@ -1,0 +1,29 @@
+{
+  "name": "screen-state-explorer",
+  "version": "0.1.0",
+  "description": "A local tool for recording and replaying observed HTTP-driven screen states.",
+  "type": "module",
+  "bin": {
+    "screen-explorer": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "explore": "npm run build --silent && node dist/cli.js explore",
+    "test": "npm run build && node --test dist/**/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "playwright": "^1.55.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "typescript": "~5.9.2"
+  },
+  "license": "MIT"
+}
