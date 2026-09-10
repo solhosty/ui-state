@@ -7,22 +7,35 @@
     "screen-explorer": "./dist/cli.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "!dist/**/*.test.js",
+    "README.md",
+    "LICENSE",
+    "docs"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "node scripts/clean.mjs && tsc -p tsconfig.json",
     "check": "tsc -p tsconfig.json --noEmit",
     "explore": "npm run build --silent && node dist/cli.js explore",
-    "test": "npm run build && node --test dist/**/*.test.js"
+    "test": "npm run build && node scripts/test.mjs",
+    "start": "npm run build --silent && node dist/cli.js dashboard",
+    "browser:install": "playwright install chromium",
+    "prepack": "npm run build",
+    "verify": "npm run format:check && npm run check && npm test",
+    "demo:verify": "npm run build --silent && node dist/demo-verify.js",
+    "format": "node scripts/format.mjs",
+    "format:check": "node scripts/format.mjs --check",
+    "dev": "npm run build --silent && node scripts/dev.mjs"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "dependencies": {
     "playwright": "^1.55.0"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",
+    "prettier": "^3.9.6",
     "typescript": "~5.9.2"
   },
   "license": "MIT"

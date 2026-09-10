@@ -1,19 +1,307 @@
-export const dashboardHtml = `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Screen State Explorer</title><style>
-:root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#252a28;background:#f7f8f7;font-synthesis:none;color-scheme:light;--muted:#78817b;--line:#e2e6e2;--green:#247451}*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid #69a78a;outline-offset:3px}button:disabled{cursor:wait}main{min-height:100vh}.topbar{height:72px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:#fff}.brand{display:flex;gap:12px;align-items:center}.mark{display:grid;place-items:center;width:33px;height:33px;border-radius:10px;background:#263d32;color:#fff}.brand h1{font-size:14px;font-weight:650;margin:0;letter-spacing:-.3px}.brand p{font-size:11px;color:var(--muted);margin:3px 0 0}.run-status{font-size:11px;color:#526259;background:#f3f6f3;border:1px solid var(--line);border-radius:20px;padding:7px 11px}.run-status:before{content:'';display:inline-block;width:6px;height:6px;background:#528c6b;border-radius:50%;margin-right:7px}.shell{display:grid;grid-template-columns:236px minmax(0,1fr);min-height:calc(100vh - 72px)}.sidebar{padding:28px 14px;border-right:1px solid var(--line);background:#fcfdfb}.workspace-label{padding:0 12px;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:#8a928c}.sidebar-title{display:flex;align-items:center;gap:9px;padding:17px 12px 26px;font-size:13px;font-weight:600}.sidebar-title svg{color:#708778}.panel-heading{display:flex;justify-content:space-between;align-items:center;padding:0 12px 12px}.panel-heading h3{font-size:11px;font-weight:600;color:#667069;margin:0}.count{font-size:10px;color:#8c958f}.route-list{display:flex;flex-direction:column;gap:4px}.route{display:block;position:relative;width:100%;border:1px solid transparent;background:transparent;border-radius:7px;text-align:left;padding:11px 12px;color:#66716a}.route:hover{background:#f0f3ef}.route[aria-pressed="true"]{background:#eaf1e9;border-color:#dce7db;color:#234a34}.route-name{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;font-weight:550}.route-meta{display:block;margin-top:5px;font-size:10px;color:#949d96}.route[aria-pressed="true"] .route-meta{color:#6d8674}.sidebar-footer{border-top:1px solid var(--line);margin:24px 12px 0;padding-top:17px;font-size:11px;color:#879189;line-height:1.6}.content{padding:30px 32px 24px;min-width:0;max-width:1800px;width:100%;margin:auto}.breadcrumb{display:flex;align-items:center;gap:9px;color:#8a928d;font-size:11px;margin-bottom:26px}.breadcrumb strong{font-weight:500;color:#434f46}.context{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:26px}.context h2{font-size:28px;letter-spacing:-1px;font-weight:600;margin:0 0 8px}.context p{margin:0;color:var(--muted);font-size:12px}.target{max-width:40%;display:flex;gap:8px;align-items:center;font-size:11px;color:#6f7c72;border:1px solid var(--line);background:#fff;padding:9px 11px;border-radius:6px}.target span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.state-heading{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:11px;color:#717d73}.state-heading h3{font-size:11px;font-weight:550;margin:0}.state-list{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 14px;margin:0 -2px 8px}.state{flex:1;min-width:145px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:13px 15px;text-align:left;color:#5a665d;transition:border-color .15s,background .15s}.state:hover{border-color:#a2b9a5}.state[aria-pressed="true"]{border-color:#6f9678;background:#f0f5ed;box-shadow:0 0 0 1px #6f967820}.state-name{display:block;font-size:12px;font-weight:600;color:#334739;margin-top:6px}.state-status{font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:#7c8d7e}.state-status:before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor;margin-right:5px}.state-detail{display:none}.workbench{display:grid;grid-template-columns:minmax(0,1fr) 254px;gap:18px;align-items:start}.viewer{overflow:hidden;border:1px solid #dce2dc;border-radius:10px;background:#fff}.viewer-header{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 18px;min-height:72px;border-bottom:1px solid var(--line)}.viewer-title{font-size:12px;margin:0;font-weight:600}.viewer-condition{display:block;font-size:10px;margin-top:5px;color:#8a948c;max-width:340px}.viewport-tabs{display:flex;gap:2px;flex-shrink:0;padding:3px;border-radius:6px;background:#f1f3f0}.viewport{border:0;background:transparent;padding:7px 9px;border-radius:4px;color:#859087;font-size:10px;white-space:nowrap}.viewport[aria-pressed="true"]{background:#fff;color:#344b3b;box-shadow:0 1px 4px #253a2614}.preview-area{display:grid;place-items:center;min-height:540px;height:calc(100vh - 405px);padding:30px;background-color:#eef1ec;background-image:radial-gradient(#ced7cc .7px,transparent .7px);background-size:12px 12px;overflow:auto}.frame{position:relative;width:100%;max-height:100%;overflow:auto;border:1px solid #d0d7ce;border-radius:7px;background:#fff;box-shadow:0 14px 35px #24372212;transition:width .2s}.frame:before{content:'●  ●  ●';display:block;position:sticky;top:0;background:#fafbf9;border-bottom:1px solid #e1e5df;height:25px;padding:7px 10px;color:#c2cbc0;font-size:7px;letter-spacing:2px}.frame img{width:100%;display:block;height:auto}.frame.tablet{width:min(80%,610px)}.frame.mobile{width:min(100%,280px);border:6px solid #354239;border-radius:24px}.frame.mobile:before{display:none}.preview-caption{display:flex;justify-content:space-between;align-items:center;padding:13px 17px;font-size:10px;color:#8a948c;border-top:1px solid var(--line)}.preview-caption strong{font-weight:500;color:#627265}.preview-caption strong:before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:#65936d;margin-right:7px}.receipt-panel{border:1px solid var(--line);border-radius:9px;background:#fff;overflow:hidden}.receipt-panel>.panel-heading{padding:19px 17px;border-bottom:1px solid var(--line)}.receipt-panel h3{color:#465649;font-size:12px}.receipt{padding:16px}.receipt-status{padding:13px;border:1px solid #dee8da;border-radius:6px;background:#f3f7ef}.field-label{font-size:9px;letter-spacing:.8px;text-transform:uppercase;color:#8b958d;font-weight:550}.receipt-status .field-label{color:#538052}.receipt-status[data-status="failed"],.receipt-status[data-status="unsupported"]{background:#faf5ee;border-color:#eee0cd}.receipt-status[data-status="failed"] .field-label,.receipt-status[data-status="unsupported"] .field-label{color:#946932}.receipt-status p{font-size:11px;line-height:1.6;color:#78866f;margin:6px 0 0}.facts{margin:8px 0 20px}.fact{border-bottom:1px solid #edf0ea;padding:15px 0}.fact dd{font-size:11px;line-height:1.5;color:#546257;margin:6px 0 0;overflow-wrap:anywhere}.replay{width:100%;padding:11px 8px;border:1px solid #2e573b;background:#31593e;color:#fff;border-radius:6px;font-size:11px;font-weight:550}.replay:hover{background:#23492f}.replay:disabled{opacity:.55}.hint,.feedback{font-size:10px;line-height:1.6;color:#90998f;margin:11px 0 0}.feedback:empty{display:none}.feedback{color:#406a48}.feedback[data-status="error"]{color:#a55b3b}.empty{font-size:12px;line-height:1.7;color:#879386;text-align:center;max-width:340px;padding:30px}.footer{display:flex;justify-content:space-between;gap:10px;margin-top:18px;font-size:10px;color:#9aa197}#capture-id{font-family:ui-monospace,monospace}@media(min-width:1700px){.preview-area{min-height:650px}}@media(max-width:1200px){.content{padding:25px 22px}.shell{grid-template-columns:205px minmax(0,1fr)}.workbench{grid-template-columns:minmax(0,1fr)}.receipt{display:grid;grid-template-columns:1fr 2fr;gap:15px}.facts{display:flex;gap:18px;margin:0}.fact{flex:1;padding:0 0 12px}.replay{max-width:260px}.hint{margin:0}.viewer-condition{max-width:300px}.preview-area{height:auto;min-height:460px;max-height:650px}}@media(max-width:700px){.topbar{padding:0 18px;height:65px}.shell{display:block}.sidebar{padding:15px;border-right:0;border-bottom:1px solid var(--line)}.workspace-label,.sidebar-title,.sidebar-footer{display:none}.route-list{flex-direction:row;overflow:auto}.route{width:170px;flex:none}.panel-heading{padding-bottom:10px}.content{padding:20px 15px}.breadcrumb{margin-bottom:20px}.context{display:block}.context h2{font-size:25px}.target{max-width:100%;margin-top:15px;width:fit-content}.state{min-width:135px}.viewer-header{display:block}.viewport-tabs{margin-top:12px;width:fit-content}.preview-area{padding:18px;min-height:330px;max-height:500px}.receipt{display:block}.facts{margin:15px 0;flex-wrap:wrap}.fact{min-width:40%}.hint{margin-top:12px}.footer{flex-direction:column}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
-.explore-form{margin-bottom:24px;padding:18px;border:1px solid var(--line);border-radius:9px;background:#fff}.url-row{display:flex;gap:9px}.url-row input{flex:1;min-width:0}.explore-form input{padding:11px;border:1px solid #d6ded5;border-radius:6px;font-size:12px;background:#fff;color:#334739}.explore-form button{padding:10px 16px;background:#31593e;color:white;border:0;border-radius:6px;font-size:12px}.explore-form button:disabled{opacity:.5}.explore-form label{font-size:11px;color:#657263;display:flex;flex-direction:column;gap:6px}.explore-form details{margin-top:12px;font-size:11px;color:#6b796b}.advanced-fields{display:flex;gap:15px;margin-top:12px;flex-wrap:wrap}.advanced-fields label:first-child{flex:1;min-width:180px}.progress{font-size:12px;color:#526b53;margin:12px 0 0;line-height:1.5}.source-routes{margin-top:16px;font-size:11px;color:#71816e}.source-item{border-top:1px solid var(--line);padding:10px 0;overflow-wrap:anywhere}.source-item strong{display:block;color:#465d45;margin-bottom:4px}#stop-explore{background:#edf1e9;color:#52694d}#stop-explore[hidden]{display:none}@media(max-width:700px){.url-row{flex-wrap:wrap}.url-row input{flex-basis:100%}}.history-control{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px;font-size:11px;color:#6b796b}.history-control select{max-width:75%;border:1px solid var(--line);border-radius:6px;padding:8px;background:#fff;color:#445b49;font:inherit}.view-switch{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:12px;font-size:11px;color:#778575}.view-switch button{border:1px solid #cedcc9;background:#fff;color:#3c603b;padding:9px 13px;border-radius:6px;font:inherit;cursor:pointer}.view-switch button[aria-pressed="true"]{background:#e8f0e2}.preview-area.comparing{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:16px;height:auto;max-height:none;padding:20px}.compare-card{padding:0;border:1px solid #d3ddce;border-radius:8px;overflow:hidden;background:white;text-align:left;box-shadow:0 5px 16px #2840190a}.compare-card img{width:100%;height:210px;display:block;object-fit:cover;object-position:top;border-bottom:1px solid #e2e8df}.compare-caption{display:flex;gap:8px;justify-content:space-between;padding:12px;font-size:10px;color:#78906f}.compare-caption strong{color:#344e30;font-weight:600}@media(max-width:700px){.preview-area.comparing{grid-template-columns:1fr}.view-switch span{display:none}}.workbench.compare-layout{grid-template-columns:minmax(0,1fr)}.compare-layout .receipt-panel{display:none}.compare-card img{height:240px}.compare-layout .viewer-condition{display:none}@media(min-width:1400px){.preview-area.comparing{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:950px){.preview-area.comparing{grid-template-columns:1fr}.compare-card img{height:300px}}</style></head><body><main>
-<header class="topbar"><div class="brand"><span class="mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="13" rx="3"/><path d="M8 21h8m-4-4v4M7 9h4m-4 3h7"/></svg></span><div><h1>Screen State Explorer</h1><p>A workspace for captured UI states</p></div></div><span id="run" class="run-status">Loading capture</span></header>
-<div class="shell"><aside class="sidebar"><div class="workspace-label">Workspace</div><div class="sidebar-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Screen library</div><div class="panel-heading"><h3>Routes</h3><span id="route-count" class="count"></span></div><nav id="routes" class="route-list" aria-label="Captured routes"></nav><div class="sidebar-footer">Captured locally.<br>Inspect a state. Replay the evidence.</div></aside>
-<div class="content"><div class="history-control"><label for="run-history">Evidence library</label><select id="run-history"><option value="">All evidence · latest per state</option></select></div><div class="breadcrumb">Workspace <span>/</span> Screen library <span>/</span> <strong>Latest capture</strong></div><form id="explore-form" class="explore-form"><label for="explore-url">App URL</label><div class="url-row"><input id="explore-url" type="url" required placeholder="http://localhost:3000" aria-label="App URL"><button id="start-explore" type="submit">Explore app</button><button id="stop-explore" type="button" hidden>Stop exploration</button></div><details><summary>Advanced</summary><div class="advanced-fields"><label>App source folder (optional)<input id="source-folder" placeholder="/path/to/your/app"></label><label>Page limit (blank for all)<input id="page-limit" type="number" min="1" step="1" placeholder="All discovered pages"></label></div></details><p id="explore-progress" class="progress" role="status">Discover and capture pages automatically. Add the source folder to find unlinked routes.</p></form><section class="context"><div><h2>Screen library</h2><p id="route-summary">Explore the states behind your screens.</p></div><div class="target"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c6 6 6 12 0 18-6-6-6-12 0-18"/></svg><span id="target">Loading target</span></div></section>
-<div class="view-switch"><span>Explore the screen. Inspect its edge cases.</span><button id="compare-states" type="button" aria-pressed="false">Compare states</button></div><section aria-label="Captured state sequence"><div class="state-heading"><h3>Captured states</h3><span id="state-count" class="count"></span></div><div id="states" class="state-list"></div></section>
-<section class="workbench" aria-label="Screen state explorer workspace"><section class="viewer" aria-live="polite"><div class="viewer-header"><div><h3 id="preview-title" class="viewer-title">Evidence preview</h3><span id="condition" class="viewer-condition"></span></div><div id="viewport-tabs" class="viewport-tabs" role="toolbar" aria-label="Preview viewport"></div></div><div id="preview-area" class="preview-area"></div><div class="preview-caption"><strong id="preview-label">No preview selected</strong><span id="preview-size"></span></div></section><aside class="receipt-panel"><div class="panel-heading"><h3>Evidence details</h3><span class="count">Recorded</span></div><div id="receipt" class="receipt"></div></aside></section><details id="source-routes" class="source-routes" hidden><summary id="source-summary">Source routes</summary><div id="source-list"></div></details><footer class="footer"><span id="total-states">Local screen captures</span><span id="capture-id"></span></footer></div></div></main><script>
+import { icon } from './icons.js'
+import { dashboardEnhancements } from './enhancements.js'
+import { dashboardStyles } from './styles.js'
 
-const root='/artifacts/',routesNode=document.querySelector('#routes'),statesNode=document.querySelector('#states'),receipt=document.querySelector('#receipt'),target=document.querySelector('#target'),runNode=document.querySelector('#run'),routeCount=document.querySelector('#route-count'),stateCount=document.querySelector('#state-count'),routeSummary=document.querySelector('#route-summary'),tabs=document.querySelector('#viewport-tabs'),area=document.querySelector('#preview-area'),title=document.querySelector('#preview-title'),condition=document.querySelector('#condition'),label=document.querySelector('#preview-label'),size=document.querySelector('#preview-size');let run,routeId,stateId,viewportId='desktop',compareMode=false;const make=(p,t,v,c)=>{const e=document.createElement(t);e.textContent=v;if(c)e.className=c;p.append(e);return e};const imagePath=(s,evidenceRunId)=>root+'runs/'+encodeURIComponent(evidenceRunId||run.runId)+'/'+s.split('/').map(encodeURIComponent).join('/');const allRoutes=()=>run.routes&&run.routes.length?run.routes:[{id:'root',label:'/',url:run.target.url,observations:run.observations}];const activeRoute=()=>allRoutes().find(r=>r.id===routeId);const activeState=()=>activeRoute()?.observations.find(s=>s.id===stateId);const previews=s=>s.previews&&s.previews.length?s.previews:s.screenshot?[{viewport:{id:'desktop',label:'Desktop',width:1440,height:960},screenshot:s.screenshot}]:[];const preview=s=>previews(s).find(p=>p.viewport.id===viewportId)||previews(s).find(p=>p.viewport.id==='desktop')||previews(s)[0];async function replay(id,button,replayRunId){button.disabled=true;button.textContent='Opening replay…';const feedback=document.querySelector('#replay-feedback');feedback.textContent='Launching a fresh browser context…';try{const r=await fetch('/api/replay?observation='+encodeURIComponent(id)+'&run='+encodeURIComponent(replayRunId||run.runId),{method:'POST'});feedback.textContent=await r.text();feedback.dataset.status=r.ok?'success':'error'}catch{feedback.textContent='Could not reach the replay service. Try again.';feedback.dataset.status='error'}finally{button.disabled=false;button.textContent='Open controlled replay ↗'}}function renderRoutes(){routesNode.replaceChildren();const rs=allRoutes();routeCount.textContent=rs.length+' route'+(rs.length===1?'':'s');rs.forEach(r=>{const b=document.createElement('button');b.type='button';b.className='route';b.setAttribute('aria-pressed',String(r.id===routeId));make(b,'span',r.label||new URL(r.url).pathname,'route-name');make(b,'span',r.observations.length?r.observations.length+' capture'+(r.observations.length===1?'':'s'):(r.coverage?.status||'discovered'),'route-meta');b.addEventListener('click',()=>{routeId=r.id;stateId=r.observations[0]?.id;viewportId='desktop';renderAll()});routesNode.append(b)})}function renderStates(){statesNode.replaceChildren();const r=activeRoute();if(!r)return;stateCount.textContent=r.observations.length+' state'+(r.observations.length===1?'':'s');routeSummary.textContent=(r.label||new URL(r.url).pathname)+' · '+(r.observations.length?r.observations.length+' capture'+(r.observations.length===1?'':'s'):(r.coverage?.status||'discovered'));r.observations.forEach(s=>{const b=document.createElement('button');b.type='button';b.className='state';b.setAttribute('aria-pressed',String(s.id===stateId));make(b,'span',s.replay.status,'state-status');make(b,'span',s.label,'state-name');make(b,'span',s.condition,'state-detail');b.addEventListener('click',()=>{stateId=s.id;viewportId='desktop';renderStates();renderViewer()});statesNode.append(b)})}function renderViewer(){document.querySelector('.workbench').classList.toggle('compare-layout',compareMode);area.classList.toggle('comparing',compareMode);area.replaceChildren();tabs.replaceChildren();receipt.replaceChildren();const s=activeState();if(!s){title.textContent='No captures yet';condition.textContent='';label.textContent='Awaiting capture';size.textContent='';make(area,'p',activeRoute().coverage?.reason||(activeRoute().coverage?.status==='capturing'?'Capturing this page…':activeRoute().coverage?.status==='queued'?'This page is queued for capture.':'This route has no captures yet.'),'empty');make(receipt,'p','Select a route with captures to inspect its evidence and replay.','empty');return}const p=preview(s);title.textContent=s.label;condition.textContent=s.condition;previews(s).forEach(x=>{const b=document.createElement('button');b.type='button';b.className='viewport';b.setAttribute('aria-pressed',String(x.viewport.id===p?.viewport.id));b.textContent=x.viewport.label;b.addEventListener('click',()=>{viewportId=x.viewport.id;renderViewer()});tabs.append(b)});if(compareMode){for(const item of activeRoute().observations){const shot=preview(item);if(!shot)continue;const card=make(area,'button','','compare-card');card.type='button';card.setAttribute('aria-label','Inspect '+item.label);const thumb=document.createElement('img');thumb.src=imagePath(shot.screenshot,item.evidenceRunId);thumb.alt=item.label+' screenshot';card.append(thumb);const caption=make(card,'div','','compare-caption');make(caption,'strong',item.label);make(caption,'span',item.replay.status==='matched'?'Replay verified':item.replay.status);card.addEventListener('click',()=>{stateId=item.id;compareMode=false;document.querySelector('#compare-states').setAttribute('aria-pressed','false');renderStates();renderViewer()})}label.textContent='State comparison';size.textContent=(p?.viewport.label||'')+' · '+activeRoute().observations.filter(item=>preview(item)).length+' captures'}else if(p){const f=document.createElement('div');f.className='frame '+p.viewport.id;const i=document.createElement('img');i.src=imagePath(p.screenshot,s.evidenceRunId);i.alt=s.label+' at '+p.viewport.label;f.append(i);area.append(f);label.textContent=p.viewport.label+' evidence';size.textContent=p.viewport.width+' × '+p.viewport.height}else{make(area,'p','No screenshot is available for this state.','empty');label.textContent='No preview';size.textContent=''}const status=document.createElement('section');status.className='receipt-status';status.dataset.status=s.replay.status;make(status,'span',s.replay.status==='matched'||s.replay.status==='captured'?(s.replay.status==='matched'?'Replay matched':'Live capture'):'Evidence unavailable','field-label');make(status,'p',s.replay.status==='matched'?'Controlled replay matches the captured DOM text.':s.replay.status==='captured'?'Live target response captured.':s.replay.reason||s.condition);receipt.append(status);const facts=document.createElement('dl');facts.className='facts';[['Captured',new Date(s.capturedAt).toLocaleString()],['Intervention',s.intervention.kind],['Viewport',p?p.viewport.label:'—'],['Action',(s.actions||[]).length?s.actions.map(a=>a.kind+': '+a.selector).join(', '):'None']].forEach(([k,v])=>{const row=document.createElement('div');row.className='fact';make(row,'dt',k,'field-label');make(row,'dd',v);facts.append(row)});receipt.append(facts);const can=!!s.replayRunId&&(s.replay.status==='captured'||s.replay.status==='matched'),b=document.createElement('button');b.className='replay';b.disabled=!can;b.textContent=can?'Open controlled replay ↗':!s.replayRunId?'Screenshot only':'Replay unavailable';b.addEventListener('click',()=>replay(s.id,b,s.replayRunId));receipt.append(b);const feedback=make(receipt,'p','','feedback');feedback.id='replay-feedback';feedback.setAttribute('role','status');make(receipt,'p',!s.replayRunId?'This is a live page screenshot. Controlled state experiments are available through the advanced CLI workflow.':'Opens a fresh context and compares visible DOM text to the captured state.','hint')}function renderAll(){renderRoutes();renderStates();renderViewer()}const form=document.querySelector('#explore-form'),urlInput=document.querySelector('#explore-url'),startButton=document.querySelector('#start-explore'),stopButton=document.querySelector('#stop-explore'),progress=document.querySelector('#explore-progress');let busy=false,lastPayload='';const historySelect=document.querySelector('#run-history');historySelect.addEventListener('change',()=>{lastPayload='';refresh()});
-function discoveryDetails(){const hints=run.sourceRoutes||[],container=document.querySelector('#source-routes'),list=document.querySelector('#source-list');container.hidden=!hints.length;document.querySelector('#source-summary').textContent=hints.length+' source route patterns · '+hints.filter(h=>h.status==='unresolved').length+' unresolved';list.replaceChildren();for(const h of hints){const row=make(list,'div','','source-item');make(row,'strong',h.template);make(row,'span',h.status==='resolved'?'Captured example: '+h.examples.join(', '):'Needs a verified example URL.');make(row,'div','Found in '+h.source)} }
-async function refresh(){try{const activity=await fetch('/api/progress').then(r=>r.json());busy=!!activity.active;startButton.disabled=busy;stopButton.hidden=!busy;const response=await fetch('/api/library'+(historySelect.value?'?run='+encodeURIComponent(historySelect.value):''));if(!response.ok){runNode.textContent='Ready to explore';return}const payload=await response.text();if(payload!==lastPayload){const x=JSON.parse(payload),changed=!run||run.runId!==x.runId;run=x;lastPayload=payload;const previous=historySelect.value;historySelect.replaceChildren();const combined=make(historySelect,'option','All evidence · latest per state');combined.value='';for(const h of run.history||[]){const o=make(historySelect,'option',new Date(h.startedAt).toLocaleString()+' · '+h.kind+' · '+h.captures+' captures');o.value=h.runId}historySelect.value=previous;if(changed||!activeRoute()){routeId=allRoutes()[0]?.id;stateId=activeRoute()?.observations[0]?.id}else if(!activeState())stateId=activeRoute()?.observations[0]?.id;target.textContent=run.target.url;if(!urlInput.value)urlInput.value=run.target.url;document.querySelector('#capture-id').textContent=run.runId;document.querySelector('#total-states').textContent=allRoutes().reduce((n,r)=>n+r.observations.length,0)+' captures';renderAll();discoveryDetails()}
-if(run.status){const completed=run.progress.captured,failed=run.progress.attention;runNode.textContent=busy?'Exploring':run.status==='running'?'Interrupted':run.status;progress.textContent=(busy?'Exploring · ':run.status==='running'?'Interrupted · ':run.status+' · ')+completed+' pages captured / '+run.progress.discovered+' discovered'+(failed?' · '+failed+' need attention':'')+(run.error?' · '+run.error:'')+(run.notes.length?' · '+run.notes.join(' '):'')}else runNode.textContent=busy?'Exploring':'Local capture';
-}catch{progress.textContent='Unable to refresh progress. Check that the dashboard is running.'}}
-form.addEventListener('submit',async event=>{event.preventDefault();startButton.disabled=true;progress.textContent='Starting exploration…';const sourceDirectory=document.querySelector('#source-folder').value.trim(),limit=document.querySelector('#page-limit').value;try{const response=await fetch('/api/explore',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({targetUrl:urlInput.value,...(sourceDirectory?{sourceDirectory}:{}),...(limit?{maxPages:Number(limit)}:{})})});if(!response.ok)throw new Error(await response.text());await refresh()}catch(error){progress.textContent=error.message;startButton.disabled=false}});
-stopButton.addEventListener('click',async()=>{stopButton.disabled=true;try{const r=await fetch('/api/explore/stop',{method:'POST'});progress.textContent=await r.text()}catch{progress.textContent='Could not stop exploration. Try again.'}finally{stopButton.disabled=false}});
-document.querySelector('#compare-states').addEventListener('click',event=>{compareMode=!compareMode;event.currentTarget.setAttribute('aria-pressed',String(compareMode));renderViewer()});refresh();setInterval(refresh,1500);
-</script></body></html>`
+export const dashboardHtml = /* HTML */ `<!doctype html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <title>Screen Explorer</title>
+      <style>
+        ${dashboardStyles}
+      </style>
+    </head>
+    <body>
+      <div class="app">
+        <header class="topbar">
+          <a class="brand" href="/" aria-label="Screen Explorer home"
+            ><span class="brand-mark">${icon('brand')}</span>Screen
+            Explorer<span class="local-tag">LOCAL</span></a
+          ><span class="connection" id="run" role="status">Connecting</span>
+        </header>
+        <aside class="sidebar">
+          <div class="sidebar-heading">
+            <span>WORKSPACE</span><span class="tiny-label">01</span>
+          </div>
+          <button
+            class="workspace-name"
+            id="workspace-toggle"
+            aria-haspopup="dialog"
+            aria-label="Switch recorded workspace"
+          >
+            <span class="workspace-icon">${icon('workspace')}</span
+            ><span class="workspace-text"
+              ><strong id="app-name">Your application</strong
+              ><span id="app-origin">Choose a workspace</span></span
+            >${icon('chevron')}
+          </button>
+          <div class="section-label">Pages <span id="route-count">0</span></div>
+          <nav id="routes" aria-label="Captured pages"></nav>
+          <details id="source-routes" hidden>
+            <summary id="source-summary">Route patterns</summary>
+            <div id="source-list"></div>
+          </details>
+          <div class="sidebar-bottom">
+            <span class="local-dot"></span> Stored on this device
+            <p>Screenshots and replay evidence stay local.</p>
+          </div>
+        </aside>
+        <main>
+          <section class="commandbar">
+            <form id="explore-form">
+              <label class="url-label" for="explore-url">APP URL</label>
+              <div class="url-control">
+                <span aria-hidden="true">↗</span
+                ><input
+                  id="explore-url"
+                  type="url"
+                  required
+                  placeholder="http://localhost:3000"
+                  aria-label="App URL"
+                  spellcheck="false"
+                /><button class="primary" id="start-explore" type="submit">
+                  Explore <span aria-hidden="true">↗</span>
+                </button>
+              </div>
+            </form>
+            <button
+              class="secondary icon-button"
+              id="advanced-toggle"
+              aria-label="Exploration settings"
+              title="Exploration settings"
+            >
+              ${icon('settings')}</button
+            ><button
+              class="secondary icon-button stop-button"
+              id="stop-explore"
+              aria-label="Stop exploration"
+              title="Stop exploration"
+              hidden
+            >
+              ${icon('stop')}
+            </button>
+          </section>
+          <section
+            class="progress-panel"
+            id="progress-panel"
+            hidden
+            aria-label="Exploration progress"
+          >
+            <div class="progress-top">
+              <strong id="progress-title">Exploring</strong
+              ><span id="progress-elapsed"></span>
+            </div>
+            <div class="progress-track"><div id="progress-fill"></div></div>
+            <div class="progress-bottom">
+              <span id="progress-detail"></span
+              ><span id="progress-count"></span>
+            </div>
+            <ol class="progress-steps">
+              <li data-phase="discovering">Discover pages</li>
+              <li data-phase="capturing">Capture screens</li>
+              <li data-phase="experiments">Test states & replay</li>
+            </ol>
+          </section>
+          <div class="activity" id="explore-progress" role="status"></div>
+          <section class="page-heading">
+            <div>
+              <div class="eyebrow">STATE EXPLORER</div>
+              <h1 id="route-title">Your screen, in every state.</h1>
+              <p id="route-summary">Enter an app URL to start exploring.</p>
+            </div>
+            <label class="history-control"
+              ><span>Evidence</span
+              ><select id="run-history" aria-label="Captured runs">
+                <option value="">Latest observations</option>
+              </select></label
+            >
+          </section>
+          <section class="board-toolbar">
+            <div class="board-title">
+              <span class="board-icon">${icon('map')}</span>
+              <h2>Observed states</h2>
+              <span class="count" id="state-count">0</span>
+            </div>
+            <div class="board-controls">
+              <div class="view-modes" role="group" aria-label="Workspace view">
+                <button
+                  id="map-view"
+                  class="icon-button"
+                  aria-label="Branch map"
+                  title="Branch map"
+                  aria-pressed="true"
+                >
+                  ${icon('map')}</button
+                ><button
+                  id="grid-view"
+                  class="icon-button"
+                  aria-label="Screenshot grid"
+                  title="Screenshot grid"
+                  aria-pressed="false"
+                >
+                  ${icon('grid')}</button
+                ><button
+                  id="fit-map"
+                  class="icon-button"
+                  aria-label="Fit map"
+                  title="Fit map"
+                >
+                  ${icon('fit')}</button
+                ><button
+                  id="focus-map"
+                  class="icon-button"
+                  aria-label="Focus map"
+                  title="Focus map"
+                  aria-pressed="false"
+                >
+                  ${icon('focus')}
+                </button>
+              </div>
+              <div
+                id="viewport-tabs"
+                class="segmented"
+                role="group"
+                aria-label="Preview viewport"
+              ></div>
+            </div>
+          </section>
+          <div id="board" class="board">
+            <div class="empty">
+              <span class="empty-mark">◫</span>
+              <h2>A new perspective on your UI</h2>
+              <p>
+                Explore an app to collect real browser screenshots, then open a
+                state to inspect its evidence.
+              </p>
+            </div>
+          </div>
+          <section id="unavailable" class="unavailable" hidden></section>
+          <footer>
+            <span id="total-states">Ready when you are</span
+            ><span>Captured screens · Controlled experiments</span>
+          </footer>
+        </main>
+      </div>
+      <dialog
+        id="workspaces-modal"
+        class="settings-modal"
+        aria-labelledby="workspaces-title"
+      >
+        <div class="modal-heading">
+          <div>
+            <span class="eyebrow">LOCAL LIBRARY</span>
+            <h2 id="workspaces-title">Recorded workspaces</h2>
+          </div>
+          <button
+            id="close-workspaces"
+            class="close"
+            aria-label="Close workspaces"
+          >
+            ×
+          </button>
+        </div>
+        <p class="help">Each app origin has its own pages and run history.</p>
+        <div id="workspace-list"></div>
+      </dialog>
+      <dialog id="inspector" class="inspector" aria-labelledby="inspect-title">
+        <div class="inspector-heading">
+          <div>
+            <span class="eyebrow" id="inspect-route"></span>
+            <h2 id="inspect-title"></h2>
+          </div>
+          <div class="inspector-actions">
+            <button
+              class="secondary"
+              id="previous-state"
+              aria-label="Previous state"
+            >
+              ←</button
+            ><button class="secondary" id="next-state" aria-label="Next state">
+              →</button
+            ><button
+              class="close"
+              id="close-inspector"
+              aria-label="Close inspector"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+        <div class="inspector-body">
+          <div class="inspect-canvas" id="inspect-image"></div>
+          <aside class="evidence">
+            <div class="eyebrow">OBSERVATION</div>
+            <p id="inspect-condition"></p>
+            <div id="inspect-status" class="evidence-status"></div>
+            <dl id="inspect-facts"></dl>
+            <button id="replay" class="primary">Open replay ↗</button>
+            <p class="help" id="replay-hint"></p>
+            <p id="replay-feedback" class="feedback" role="status"></p>
+            <details>
+              <summary>Evidence source</summary>
+              <code id="evidence-source"></code>
+            </details>
+          </aside>
+        </div>
+        <div class="inspector-footer">
+          <span id="inspect-size"></span
+          ><span>Use ← → to move between states · Esc to close</span>
+        </div>
+      </dialog>
+      <dialog
+        id="advanced-modal"
+        class="settings-modal"
+        aria-labelledby="settings-title"
+      >
+        <form method="dialog" id="settings-form">
+          <div class="modal-heading">
+            <div>
+              <span class="eyebrow">EXPLORATION</span>
+              <h2 id="settings-title">Capture settings</h2>
+            </div>
+            <button
+              class="close"
+              value="cancel"
+              aria-label="Close settings"
+              formnovalidate
+            >
+              ×
+            </button>
+          </div>
+          <p class="help">Choose how far to explore your application.</p>
+          <label
+            >Source folder
+            <span>Optional · discover routes not linked on the page</span
+            ><input id="source-folder" placeholder="/path/to/your/app" /></label
+          ><label
+            >Page limit <span>Leave blank to explore all discovered pages</span
+            ><input
+              id="page-limit"
+              type="number"
+              min="1"
+              step="1"
+              placeholder="No limit" /></label
+          ><label
+            >API response matcher
+            <span>Optional · URL fragment for the JSON collection to vary</span
+            ><input id="request-matcher" placeholder="/api/items" /></label
+          ><label
+            >Retry control
+            <span
+              >Optional · CSS selector; otherwise discover a visible retry
+              button</span
+            ><input id="retry-selector" placeholder="[data-testid=retry]"
+          /></label>
+          <div class="modal-actions">
+            <button class="secondary" value="cancel" formnovalidate>
+              Cancel</button
+            ><button class="primary" value="save">Save settings</button>
+          </div>
+        </form>
+      </dialog>
+      <script>
+        ${dashboardEnhancements}
+      </script>
+    </body>
+  </html>`

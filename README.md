@@ -1,104 +1,140 @@
-# Screen State Explorer
+# Screen Explorer
 
-Screen State Explorer is a local TypeScript tool for recording and replaying observed screen states in independently authored HTTP-driven web applications.
+**See the states hiding behind your screen.**
 
-It records a real baseline response, then runs bounded experiments in fresh browser contexts: delayed response, empty collection, synthetic failure, and optional recovery through a configured retry control. Each observation produces a screenshot, visible text, a DOM hash, and a replay result in local artifacts.
+A local developer tool that turns an HTTP-driven web page into a map of real browser observations. Capture the original screen, delay a response, empty a collection, inject a failure, and follow a retry into recovery. Open any supported state in a fresh browser to reproduce it.
 
-## Scope of the first build
+Local artifacts · Real screenshots · Recorded replay recipes · MIT licensed
 
-The tool only intercepts an explicitly selected `GET` request that returned JSON during baseline capture. The capture selector is a required URL fragment; every following experiment and replay is narrowed to the exact captured response URL. It never invents write requests, and it does not claim to reproduce realtime, service-worker, server-memory, or arbitrary in-memory JavaScript state.
+![Screen Explorer showing five observed Conduit states connected by delay, empty, failure, and retry recipes](docs/demo-map.png)
 
-Target application code does not belong in this repository. The first target will be cloned separately from GitHub and run unchanged.
+*Real browser captures from the independently maintained Conduit demo target.*
 
-## Run
-
-Start the dashboard and enter your app URL:
-
-```bash
-npm install
-npm run build
-node dist/cli.js dashboard --port 4174
-```
-
-Open http://localhost:4174 and choose **Explore app**. The explorer visits same-origin links recursively and captures each page at four viewport sizes. Results appear as pages finish. **Stop exploration** preserves completed captures.
-
-Under **Advanced**, optionally supply the app's source folder to discover unlinked route declarations. Leave the page limit blank to explore all discovered URLs, or set a limit. Only read-only HTTP requests are allowed during page exploration; forms are not submitted, service workers are blocked, and cross-origin document navigation is blocked.
-
-The same flow is available in the CLI:
-
-```bash
-npm run explore -- --target http://localhost:3000 --source /path/to/app
-npm run explore -- --target http://localhost:3000 --max-pages 20
-```
-
-All discovered pages are explored by default (`--all` is also accepted). Press Ctrl+C to stop and save completed captures. Query-string URLs and hash routes are retained, so apps with endless pagination may need a limit or manual stop.
-
-Source discovery recognizes common literal route declarations and Next, Nuxt, and SvelteKit-style filesystem routes. It is conservative, not a complete framework parser. Dynamic templates can be resolved from observed links with matching path prefixes; parameters are never fabricated. Templates without a captured example remain visible in the dashboard. Computed routes, nested relative route configs, arbitrary API-to-parameter inference, and authenticated page discovery are not yet automatic.
-
-### Controlled state experiments
-
-To capture loading, empty, failure, and recovery states for a specific page, supply a read-only JSON request matcher:
-
-```bash
-npm run explore -- \
-  --target http://localhost:3000/some-screen \
-  --request-url /api/items \
-  --retry '[data-testid="retry"]' \
-  --headed
-```
-
-These schema-5 runs retain controlled replay. URL-only explorations produce schema-6 screenshot runs without replay fixtures. Previous runs remain in `.screen-explorer/runs/`; the dashboard displays the latest run.
-
-### Authenticated applications
-
-Use an isolated, visible Playwright browser to log in once. Complete MFA yourself, then confirm in the terminal to save local session state. The explorer never reads your everyday browser profile or copies its cookies.
-
-```bash
-npm run build
-node dist/cli.js login \
-  --target https://app.example.test/login \
-  --session .screen-explorer/sessions/example.json
-
-npm run explore -- \
-  --target https://app.example.test/projects \
-  --request-url /api/projects \
-  --session .screen-explorer/sessions/example.json \
-  --headed
-```
-
-Session files can contain credentials. Keep them in `.screen-explorer/`, which is Git-ignored, revoke them when no longer needed, and never attach them to a run artifact or issue.
-
-The route inventory is discovered from rendered same-origin links. Add a hidden but authorized route explicitly with repeated `--route` flags; route seeds must stay on the target origin. A route only receives a state sequence after a safe, route-specific `GET` response is selected and observed.
-
-Artifacts are written locally to `.screen-explorer/runs/<run-id>/` and are excluded from Git.
-
-To inspect the latest run, serve the local dashboard:
-
-```bash
-npm run build
-node dist/cli.js dashboard --port 4174
-```
-
-## Repository layout
+## The experience
 
 ```text
-src/
-  cli.ts                       command boundary and input validation
-  domain/                      contracts and deterministic fixture transforms
-  infrastructure/              Playwright and local artifact adapters
+                       ┌─ Delay ── Loading
+Original screen ───────┼─ Empty ── Empty collection
+                       └─ Fail ─── Request failed ── Retry ── Recovered
 ```
+
+The map displays captured evidence. Branches connect recipes from the same recorded run; a Retry edge requires a recorded click. Unsupported states appear separately, with a reason. The screenshot grid remains available for comparison.
+
+## Start locally
+
+Requires **Node.js 22 or newer** and a web app you control, already running locally or in an authorized staging environment.
+
+From this repository:
+
+```bash
+npm ci
+npm run browser:install
+npm start
+```
+
+Open **http://127.0.0.1:4174**. Enter your app URL and select **Explore**. Keep this terminal running; `Ctrl+C` stops the dashboard. `npm start` builds and serves the only dashboard implementation. **The dashboard always uses port 4174. There is no port override or automatic fallback.** If it is occupied, use the existing server or stop it before restarting. Every session must reuse this address; do not create alternate dashboard servers.
+
+On Linux, Playwright may need system libraries: run `npx playwright install --with-deps chromium` in an environment where you can install them. Chrome is used when available at the standard macOS location; otherwise the installed Playwright Chromium is used. No ordinary browser profile is read.
+
+This is an early local tool. The npm package has not been published; installation instructions intentionally use a repository checkout.
+
+### Edit with automatic reload
+
+```bash
+npm run dev
+```
+
+Stop `npm start` before starting development mode. The watcher rebuilds TypeScript, restarts the same server on **4174**, and reloads the browser after a successful build. It does not choose another port. A React migration is not needed for this workflow. Stop active exploration before editing, because rebuilding restarts the local worker.
+
+## Explore an application
+
+1. Enter the app URL. Open the settings icon to set a page budget; start with **1 page** for a repeatable demo.
+2. Explore. Progress shows the current page, viewport or state, elapsed time, and whether the engine is capturing or verifying replays. Stop preserves completed evidence.
+3. Switch between the **branch map** and **screenshot grid**, then choose a viewport.
+4. Select a captured screen. Inspect its condition, capture time, fixture provenance, and replay status. Use the arrow keys to move between states.
+5. Select **Open replay** to reconstruct the recorded state in a separate browser.
+
+Automatic experiments run when one eligible JSON collection response is found. When several candidates exist, set an **API response matcher** in settings, such as `/api/items`. An optional CSS retry selector can identify a custom retry control; otherwise the explorer looks for a visible **Retry** or **Try again** button in the failed screen.
+
+### Return to previous work
+
+Click the workspace name in the left sidebar to choose a **recorded workspace**. Workspaces are grouped by app origin, including its port. Use **Evidence** to choose an exact run; **Latest observations** combines the saved evidence for that workspace while retaining each observation's original replay recipe.
+
+Screenshots, fixtures, sessions, and run records are stored under `.screen-explorer/`, which is Git-ignored. Switching workspaces does not delete earlier work.
+
+### CLI
+
+```bash
+# Discover pages and capture responsive screenshots
+npm run explore -- --target http://localhost:3000 --max-pages 5
+
+# Run controlled experiments against one selected GET response
+npm run explore -- \
+  --target http://localhost:3000/items \
+  --request-url /api/items \
+  --retry '[data-testid="retry"]'
+
+# Discover unlinked routes from local source
+npm run explore -- --target http://localhost:3000 --source /path/to/app
+```
+
+For authenticated controlled runs, complete login yourself in an isolated browser:
+
+```bash
+node dist/cli.js login --target https://staging.example.test/login \
+  --session .screen-explorer/sessions/staging.json
+
+npm run explore -- --target https://staging.example.test/items \
+  --request-url /api/items --session .screen-explorer/sessions/staging.json
+```
+
+Session files contain credentials. Keep them local and out of issues, recordings, and commits. The dashboard's page discovery does not currently accept a saved login session; use the controlled CLI workflow for authenticated capture.
+
+## What this proves
+
+A capture proves the browser rendered an observation under a recorded intervention. A verified replay means the visible DOM text matched; it does **not** mean pixel equivalence, backend correctness, or exhaustive state coverage.
+
+- Only captured JSON **GET** responses are transformed. Other request methods besides GET, HEAD, and OPTIONS are blocked during exploration and replay.
+- HTTP method is not a complete side-effect guarantee. Use targets whose allowed requests are safe to repeat.
+- Source-route discovery is conservative. Dynamic routes need observed example URLs; parameters are never invented.
+- Realtime protocols, service workers, server memory, and arbitrary in-memory application state are outside the supported replay model.
+- Missing retry controls and responses without a supported collection remain unsupported, with visible reasons.
+- Page discovery has a configurable page budget. Unlimited crawling can encounter endless query-string navigation.
 
 ## Development
 
 ```bash
-npm run check
-npm test
-npm run build
+npm ci
+npm run format
+npm run verify
+npm start
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution and browser-evidence expectations, and [SECURITY.md](SECURITY.md) for private vulnerability reporting.
+The project uses TypeScript, Node's HTTP server, Playwright, and a small browser UI without a frontend framework. There is one dashboard entry point in `src/dashboard/view.ts`, one interaction module, one stylesheet, and shared SVG icons. `dist/` is generated; edit `src/` and rebuild.
 
-## Status
+```text
+src/
+  cli.ts                    Local commands
+  dashboard/                UI and HTTP API
+  domain/                   Evidence contracts, library, fixture transforms
+  infrastructure/           Browser capture, discovery, replay, storage
+  demo-verify.ts            Repeated real-browser demo gate
+```
 
-The first capture proof is verified against a separately cloned, independently authored GitHub target. See [independent target validation](docs/independent-target.md). The chosen public-demo target is a separate Conduit fork with an explicit retry UI; see [demo target setup](docs/demo-target.md). The initial browser evidence is complete; route discovery and route-specific request selection remain active work.
-# ui-state
+CI checks TypeScript, tests, and package contents on Linux, macOS, and Windows with Node 22 and 24. CI configuration is not a claim that those remote runs have already passed. Browser demo verification is a separate integration gate against a real target:
+
+```bash
+npm run demo:verify -- .screen-explorer/runs/<state-run-id>
+```
+
+This requires all five states and four viewport sizes, then verifies each combination three times. The report stays inside the private run directory.
+
+See [contribution guidelines](CONTRIBUTING.md), [architecture](docs/architecture.md), [demo setup](docs/demo-target.md), and [demo readiness](docs/demo-readiness.md). Report vulnerabilities using [the security policy](SECURITY.md).
+
+## Contributing and release status
+
+Small fixes with reproducible browser evidence are welcome. Keep independently authored target applications outside this repository. Do not attach session files, captured API bodies, or private screenshots to public issues.
+
+The implementation is prepared for open-source review, not a universal browser-testing platform. A public release still requires successful CI, a sanitized demo recording, and a final package review. Nothing is automatically published by the development commands.
+
+[MIT License](LICENSE) · Copyright 2026 Hunter

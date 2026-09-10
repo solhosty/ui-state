@@ -11,13 +11,38 @@ test('keeps same-origin pages and query routes but excludes external and destruc
   assert.equal(candidateUrl('/#/settings', base), base + '#/settings')
 })
 test('resolves parameters from matching observed paths without guessing unrelated IDs', () => {
-  assert.equal(resolveTemplate('/projects/:id/settings', 'https://example.test/projects/123'), '/projects/123/settings')
-  assert.equal(resolveTemplate('/projects/[id]/settings', 'https://example.test/users/123'), undefined)
-  assert.equal(resolveTemplate('/teams/:team/projects/:id', 'https://example.test/teams/acme'), undefined)
-  assert.equal(resolveTemplate('/files/[...path]', 'https://example.test/files/a'), undefined)
+  assert.equal(
+    resolveTemplate(
+      '/projects/:id/settings',
+      'https://example.test/projects/123',
+    ),
+    '/projects/123/settings',
+  )
+  assert.equal(
+    resolveTemplate(
+      '/projects/[id]/settings',
+      'https://example.test/users/123',
+    ),
+    undefined,
+  )
+  assert.equal(
+    resolveTemplate(
+      '/teams/:team/projects/:id',
+      'https://example.test/teams/acme',
+    ),
+    undefined,
+  )
+  assert.equal(
+    resolveTemplate('/files/[...path]', 'https://example.test/files/a'),
+    undefined,
+  )
 })
 test('matches common dynamic template syntaxes', () => {
-  for (const template of ['/projects/:id/settings','/projects/[id]/settings','/projects/$id/settings']) {
+  for (const template of [
+    '/projects/:id/settings',
+    '/projects/[id]/settings',
+    '/projects/$id/settings',
+  ]) {
     assert.ok(routePattern(template).test('/projects/123/settings'))
     assert.ok(!routePattern(template).test('/projects/123/other'))
   }

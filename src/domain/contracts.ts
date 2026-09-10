@@ -1,4 +1,5 @@
-export type ObservationKind = 'baseline' | 'loading' | 'empty' | 'failed' | 'recovered'
+export type ObservationKind =
+  'baseline' | 'loading' | 'empty' | 'failed' | 'recovered'
 export type ReplayStatus = 'captured' | 'matched' | 'unsupported' | 'failed'
 export type ViewportId = 'mobile' | 'tablet' | 'desktop' | 'xl-desktop'
 
@@ -77,7 +78,14 @@ export interface ObservationPreview {
 }
 
 export interface RouteCoverage {
-  status: 'captured' | 'discovered' | 'seeded' | 'unreachable' | 'queued' | 'capturing' | 'needs-auth'
+  status:
+    | 'captured'
+    | 'discovered'
+    | 'seeded'
+    | 'unreachable'
+    | 'queued'
+    | 'capturing'
+    | 'needs-auth'
   reason?: string
 }
 
@@ -108,7 +116,13 @@ export interface RunArtifact {
   schemaVersion: 5
   runId: string
   target: { url: string; origin: string }
-  request: { method: 'GET'; url: string; match: RequestMatcher; fixturePath: string; fixtureSha256: string }
+  request: {
+    method: 'GET'
+    url: string
+    match: RequestMatcher
+    fixturePath: string
+    fixtureSha256: string
+  }
   startedAt: string
   completedAt: string
   observations: Observation[]
@@ -129,11 +143,30 @@ export interface SourceRoute {
   examples: string[]
 }
 export interface DiscoveryRequest {
+  requestUrl?: string
+  retrySelector?: string
   targetUrl: string
   sourceDirectory?: string
   maxPages?: number
 }
+export interface ExplorationProgress {
+  phase:
+    | 'discovering'
+    | 'capturing'
+    | 'experiments'
+    | 'complete'
+    | 'stopped'
+    | 'failed'
+  route?: string
+  detail?: string
+  completedSteps?: number
+  totalSteps?: number
+  completedExperiments?: number
+  totalExperiments?: number
+  updatedAt: string
+}
 export interface DiscoveryRun {
+  activity?: ExplorationProgress
   schemaVersion: 6
   mode: 'screenshots'
   runId: string
