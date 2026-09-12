@@ -1,0 +1,52 @@
+diff --git a/examples/finefoods-material-ui/src/components/product/list-table/index.tsx b/examples/finefoods-material-ui/src/components/product/list-table/index.tsx
+index e915424..8bd94fb 100644
+--- a/examples/finefoods-material-ui/src/components/product/list-table/index.tsx
++++ b/examples/finefoods-material-ui/src/components/product/list-table/index.tsx
+@@ -4,6 +4,12 @@ import { NumberField, type UseDataGridReturnType } from "@refinedev/mui";
+ import { DataGrid, type GridColDef } from "@mui/x-data-grid";
+ import Typography from "@mui/material/Typography";
+ import Avatar from "@mui/material/Avatar";
++import Box from "@mui/material/Box";
++import Button from "@mui/material/Button";
++import Stack from "@mui/material/Stack";
++import RestaurantMenuOutlinedIcon from "@mui/icons-material/RestaurantMenuOutlined";
++import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
++import { Link } from "react-router";
+ import type { ICategory, IProduct } from "../../../interfaces";
+ import { useLocation } from "react-router";
+ import IconButton from "@mui/material/IconButton";
+@@ -14,6 +20,25 @@ type Props = {
+   categories: ICategory[];
+ } & UseDataGridReturnType<IProduct>;
+ 
++const EmptyProducts = () => {
++  const t = useTranslate();
++  const { createUrl } = useNavigation();
++  return (
++    <Stack alignItems="center" justifyContent="center" spacing={2} sx={{ height: "100%", minHeight: 320, p: 4, textAlign: "center" }}>
++      <Box sx={{ display: "grid", placeItems: "center", width: 64, height: 64, borderRadius: 3, bgcolor: "action.hover", color: "primary.main" }}>
++        <RestaurantMenuOutlinedIcon sx={{ fontSize: 30 }} />
++      </Box>
++      <Typography variant="h6">{t("products.empty.title", "Your menu starts here")}</Typography>
++      <Typography color="text.secondary" sx={{ maxWidth: 370 }}>
++        {t("products.empty.description", "Add your first product to start building your menu. Products will appear here when they are ready.")}
++      </Typography>
++      <Button component={Link} to={createUrl("products")} variant="contained" startIcon={<AddOutlinedIcon />}>
++        {t("products.empty.action", "Add your first product")}
++      </Button>
++    </Stack>
++  );
++};
++
+ export const ProductListTable = (props: Props) => {
+   const go = useGo();
+   const { pathname } = useLocation();
+@@ -151,6 +176,8 @@ export const ProductListTable = (props: Props) => {
+     <DataGrid
+       {...props.dataGridProps}
+       columns={columns}
++      slots={{ noRowsOverlay: props.tableQuery?.isError ? undefined : EmptyProducts }}
++      sx={{ "--DataGrid-overlayHeight": "340px" }}
+       pageSizeOptions={[12, 24, 48, 96]}
+     />
+   );

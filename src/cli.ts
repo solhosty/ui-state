@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { startAgentServer } from './agent-server.js'
 import { PageDiscovery } from './infrastructure/page-discovery.js'
 import { resolve } from 'node:path'
 import type { ExplorationRequest } from './domain/contracts.js'
@@ -28,10 +29,13 @@ function usage(): never {
     '       screen-explorer explore --target <url> --request-url <stable path fragment> [--retry <selector>] [--route <hidden-route-url>] [--session <local-state.json>] [--headed]',
   )
   console.error('       screen-explorer dashboard [--artifacts <directory>]')
+  console.error('       screen-explorer mcp [--artifacts <directory>]')
   process.exit(1)
 }
 
-if (command === 'login') {
+if (command === 'mcp') {
+  await startAgentServer(resolve(option('--artifacts') ?? '.screen-explorer'))
+} else if (command === 'login') {
   const targetUrl = option('--target')
   const sessionPath = option('--session')
   if (!targetUrl || !sessionPath) usage()

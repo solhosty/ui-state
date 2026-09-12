@@ -1,3 +1,4 @@
+import { revealScript } from './reveal.js'
 import { icon } from './icons.js'
 import { dashboardEnhancements } from './enhancements.js'
 import { dashboardStyles } from './styles.js'
@@ -124,6 +125,13 @@ export const dashboardHtml = /* HTML */ `<!doctype html>
               <span class="count" id="state-count">0</span>
             </div>
             <div class="board-controls">
+              <button
+                id="play-exploration"
+                class="primary reveal-launch"
+                disabled
+              >
+                Play exploration
+              </button>
               <div class="view-modes" role="group" aria-label="Workspace view">
                 <button
                   id="map-view"
@@ -183,6 +191,43 @@ export const dashboardHtml = /* HTML */ `<!doctype html>
           </footer>
         </main>
       </div>
+      <dialog
+        id="reveal-dialog"
+        class="reveal-dialog intro"
+        aria-labelledby="reveal-headline"
+      >
+        <div class="reveal-top">
+          <span class="reveal-wordmark">${icon('brand')} Screen Explorer</span
+          ><span id="reveal-source"></span
+          ><button
+            id="reveal-close"
+            class="close"
+            aria-label="Close exploration presentation"
+          >
+            ×
+          </button>
+        </div>
+        <div class="reveal-copy">
+          <span id="reveal-kicker" class="eyebrow"></span>
+          <h2 id="reveal-headline"></h2>
+          <p id="reveal-description"></p>
+        </div>
+        <div id="reveal-scene" class="reveal-scene"></div>
+        <div class="reveal-bottom">
+          <span id="reveal-recorded"></span>
+          <div class="reveal-actions">
+            <button id="reveal-again" class="secondary" hidden>
+              Watch again</button
+            ><button id="reveal-inspect" class="secondary" hidden>
+              Evidence details</button
+            ><button id="reveal-action" class="primary">Reveal states</button
+            ><button id="reveal-live" class="primary" hidden>
+              Open this state ↗
+            </button>
+          </div>
+        </div>
+        <p id="reveal-feedback" class="feedback" role="status"></p>
+      </dialog>
       <dialog
         id="workspaces-modal"
         class="settings-modal"
@@ -302,6 +347,7 @@ export const dashboardHtml = /* HTML */ `<!doctype html>
       </dialog>
       <script>
         ${dashboardEnhancements}
+        ${revealScript}
       </script>
     </body>
   </html>`

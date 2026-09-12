@@ -265,6 +265,8 @@ function renderBoard() {
 function render() {
   renderRoutes()
   renderTabs()
+  $('play-exploration').disabled =
+    revealSequence(observations()).filter((item) => preview(item)).length < 2
   renderBoard()
   const count = captured().length,
     missing = observations().length - count
@@ -884,7 +886,8 @@ setInterval(() => {
   if (
     !$('inspector').open &&
     !$('advanced-modal').open &&
-    !$('workspaces-modal').open
+    !$('workspaces-modal').open &&
+    !$('reveal-dialog').open
   )
     refresh()
 }, 2000)

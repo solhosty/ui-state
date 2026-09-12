@@ -9,7 +9,7 @@ let failed = false
 for (const file of files) {
   const original = await readFile(file, 'utf8')
   let source = original
-  const marker = file.endsWith('enhancements.ts') ? 'String.raw`' : file.endsWith('styles.ts') ? '= `' : null
+  const marker = (file.endsWith('enhancements.ts') || file.endsWith('dashboard/reveal.ts')) ? 'String.raw`' : file.endsWith('styles.ts') ? '= `' : null
   if (marker) {
     const start = source.indexOf(marker) + marker.length
     const end = source.lastIndexOf('`')

@@ -31,7 +31,9 @@
     "node": ">=22"
   },
   "dependencies": {
-    "playwright": "^1.55.0"
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "playwright": "^1.55.0",
+    "zod": "^4.6.1"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",

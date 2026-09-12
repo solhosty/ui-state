@@ -19,14 +19,22 @@ The repeatability report is private at `.screen-explorer/runs/run_23b13ba3-fc58-
 npm run demo:verify -- .screen-explorer/runs/<state-run-id>
 ```
 
-## Recording script
+## Engine walkthrough (verification fixture)
 
-1. Start with Conduit's populated page. In the explorer, select its workspace and the verified state-experiment run.
-2. Select the branch map and focus mode to show all five captured screens.
-3. Follow Request failed → Retry → Recovered, open the recovered observation, and select Open replay.
-4. Show the matched replay result and the live reproduced screen.
+1. Select the verified Conduit state-experiment run and choose **Play exploration**.
+2. Start on the large original screen, then select **Reveal states**. The original shrinks as real loading, empty, failure, and recovery screenshots appear over approximately six seconds.
+3. Select the failed or recovered screen to expand it. Select **Open this state** to reconstruct its recipe directly in a browser.
+4. Show the matched replay result and the live reproduced screen. The recorded-exploration label stays visible throughout.
+
+Short windows use a compact card layout; taller desktop windows show the connected branches. Reduced-motion settings reveal the observations without delayed animation. Evidence details remain available outside the presentation.
 
 Exploration itself takes longer than a 20-second clip. Use an already completed run for this walkthrough, or clearly label any accelerated capture footage. Do not imply the map is generated instantaneously.
+
+## Agent tool loop
+
+The local MCP server now returns multi-state PNGs and evidence directly to a compatible coding agent. The real protocol integration test covers capture, full-size inspection, recovery replay, and fresh capture after a source change. The local suite passes 27 tests. See [agent tools](agent-tools.md) for setup and limitations.
+
+The requested product film now centers on an agent seeing states, editing the app, and observing the result. Conduit is not the intended film target; see the [product film brief](product-film.md). A first 40-second cut now demonstrates an agent inspecting Finefoods state images, improving its empty state, recapturing, and verifying the empty-state replay. See the [film evidence](demo/dashboard-film.md) for the output, reproduction notes, and verification limits.
 
 ## Before a public release
 

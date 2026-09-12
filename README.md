@@ -1,14 +1,22 @@
 # Screen Explorer
 
-**See the states hiding behind your screen.**
+**Give your coding agent more than the happy path.**
 
-A local developer tool that turns an HTTP-driven web page into a map of real browser observations. Capture the original screen, delay a response, empty a collection, inject a failure, and follow a retry into recovery. Open any supported state in a fresh browser to reproduce it.
+A local tool that lets a coding agent see multiple observed UI states together. Capture the original screen, delay a response, empty a collection, inject a failure, and follow a retry into recovery. The agent receives real images and conditions, uses its coding tools to adjust the app, then captures again to check the result.
 
-Local artifacts · Real screenshots · Recorded replay recipes · MIT licensed
+Local MCP tools · Real screenshots · Recorded replay recipes · MIT licensed
 
 ![Screen Explorer showing five observed Conduit states connected by delay, empty, failure, and retry recipes](docs/demo-map.png)
 
 *Real browser captures from the independently maintained Conduit demo target.*
+
+## For coding agents
+
+Connect the [local MCP server](docs/agent-tools.md) to an image-capable coding agent. It exposes `explore_states`, `inspect_states`, `replay_state`, and `list_runs`. The agent receives a labeled multi-state PNG and structured evidence directly from its tool call; it can request individual full-size images when needed.
+
+**Explore → inspect → edit with your agent → explore again.** Screen Explorer supplies observations and replay checks. The agent supplies the reasoning and code edits. This is selected response-state coverage, not a promise to enumerate every screen or automatically fix every issue.
+
+The MCP server uses stdio and opens no listening port. The optional human dashboard remains on **http://localhost:4174**.
 
 ## The experience
 
@@ -17,6 +25,8 @@ Local artifacts · Real screenshots · Recorded replay recipes · MIT licensed
 Original screen ───────┼─ Empty ── Empty collection
                        └─ Fail ─── Request failed ── Retry ── Recovered
 ```
+
+**Play exploration** starts with one large captured screen, then reveals its loading, empty, failure, and recovery observations in sequence. Select a state to zoom in and open its recipe directly in a real browser. The presentation is labeled as a recorded exploration; it does not simulate a new scan.
 
 The map displays captured evidence. Branches connect recipes from the same recorded run; a Retry edge requires a recorded click. Unsupported states appear separately, with a reason. The screenshot grid remains available for comparison.
 
