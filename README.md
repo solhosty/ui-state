@@ -46,7 +46,7 @@ Open **http://127.0.0.1:4174**. Enter your app URL and select **Explore**. Keep 
 
 On Linux, Playwright may need system libraries: run `npx playwright install --with-deps chromium` in an environment where you can install them. Chrome is used when available at the standard macOS location; otherwise the installed Playwright Chromium is used. No ordinary browser profile is read.
 
-This is an early local tool. The npm package has not been published; installation instructions intentionally use a repository checkout.
+This is an early local tool. The npm package has not been published; installation instructions intentionally use a repository checkout. See the [release checklist](docs/release-checklist.md) before creating a tag or publishing a package.
 
 ### Edit with automatic reload
 
@@ -143,8 +143,8 @@ See [contribution guidelines](CONTRIBUTING.md), [architecture](docs/architecture
 
 ## Contributing and release status
 
-Small fixes with reproducible browser evidence are welcome. Keep independently authored target applications outside this repository. Do not attach session files, captured API bodies, or private screenshots to public issues.
+Small fixes with reproducible browser evidence are welcome. Keep independently authored target applications outside this repository. Do not attach session files, captured API bodies, or private screenshots to public issues. Report vulnerabilities through the [private security advisory form](https://github.com/solhosty/ui-state/security/advisories/new).
 
-The implementation is prepared for open-source review, not a universal browser-testing platform. A public release still requires successful CI, a sanitized demo recording, and a final package review. Nothing is automatically published by the development commands.
+The implementation is prepared for open-source review, not a universal browser-testing platform. The current `0.1.0` release candidate still requires successful hosted CI, a sanitized demo recording, and a final package review before a public tag or package publication. Nothing is automatically published by the development commands.
 
 [MIT License](LICENSE) · Copyright 2026 Hunter

@@ -40,7 +40,7 @@ The requested product film now centers on an agent seeing states, editing the ap
 
 - Record and review the short clip for readability and private data.
 - Run the configured Linux, macOS, and Windows CI matrix remotely; those jobs have not been executed in this local session.
-- Review the final package and repository metadata before publishing. No release or remote publication has been performed.
+- Complete the [release checklist](release-checklist.md), including final package/repository metadata review and version/tag review. No release or remote publication has been performed.
 - Probe additional app architectures before making broad compatibility claims.
 
 ## Known limits

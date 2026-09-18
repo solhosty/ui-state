@@ -25,6 +25,4 @@
 
 - [ ] Record a browser walkthrough using the independent Conduit demo target.
 - [ ] Draft the X post and wait for explicit approval before publishing.
-- [ ] Initialize and publish the Screen State Explorer repository.
-- [ ] Add CI for TypeScript checks and tests.
-- [ ] Add sanitized example artifacts, versioning, and release notes.
+- [ ] Publish sanitized example artifacts after the release checklist has passed.
