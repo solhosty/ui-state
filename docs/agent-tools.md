@@ -32,7 +32,7 @@ Add this server to your MCP client's configuration, replacing both paths with ab
 }
 ```
 
-Use the full Node executable path if your client does not inherit your shell's PATH. Set the client's tool timeout to at least ten minutes for exploration. The MCP transport uses stdio; it opens **no listening port**. The optional human dashboard remains fixed at **http://localhost:4174**.
+Use the full Node executable path if your client does not inherit your shell's PATH. Set the client's tool timeout to at least ten minutes for exploration. The MCP transport uses stdio; it opens **no listening port**. The optional human dashboard remains fixed at **http://127.0.0.1:4174**.
 
 This repository provides the server. It does not silently register itself in your AI client's settings. Client-specific configuration and image display support vary.
 

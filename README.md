@@ -16,7 +16,7 @@ Connect the [local MCP server](docs/agent-tools.md) to an image-capable coding a
 
 **Explore → inspect → edit with your agent → explore again.** Screen Explorer supplies observations and replay checks. The agent supplies the reasoning and code edits. This is selected response-state coverage, not a promise to enumerate every screen or automatically fix every issue.
 
-The MCP server uses stdio and opens no listening port. The optional human dashboard remains on **http://localhost:4174**.
+The MCP server uses stdio and opens no listening port. The optional human dashboard remains on **http://127.0.0.1:4174**.
 
 ## The experience
 
