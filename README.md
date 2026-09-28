@@ -46,7 +46,7 @@ Open **http://127.0.0.1:4174**. Enter your app URL and select **Explore**. Keep 
 
 On Linux, Playwright may need system libraries: run `npx playwright install --with-deps chromium` in an environment where you can install them. Chrome is used when available at the standard macOS location; otherwise the installed Playwright Chromium is used. No ordinary browser profile is read.
 
-This is an early local tool. The npm package has not been published; installation instructions intentionally use a repository checkout. See the [release checklist](docs/release-checklist.md) before creating a tag or publishing a package.
+This is an early local tool. The npm package has not been published; installation instructions intentionally use a repository checkout.
 
 ### Edit with automatic reload
 
@@ -139,7 +139,7 @@ npm run demo:verify -- .screen-explorer/runs/<state-run-id>
 
 This requires all five states and four viewport sizes, then verifies each combination three times. The report stays inside the private run directory.
 
-See [contribution guidelines](CONTRIBUTING.md), [architecture](docs/architecture.md), [demo setup](docs/demo-target.md), and [demo readiness](docs/demo-readiness.md). Report vulnerabilities using [the security policy](SECURITY.md).
+See [contribution guidelines](CONTRIBUTING.md), [architecture](docs/architecture.md), [demo setup](docs/demo-target.md). Report vulnerabilities using [the security policy](SECURITY.md).
 
 ## Contributing and release status
 
